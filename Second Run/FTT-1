@@ -30,3 +30,10 @@ myAge_seconds = seconds_per_minute * minutes_per_hour * hours_per_year *
 
 puts
 puts "Well, if you're really #{years_old} then you're #{myAge_seconds} seconds old."
+
+# Chris Pines Age
+cp_age = 1160 * 1000000 #seconds old
+cp_age_in_years = cp_age/(seconds_per_minute*minutes_per_hour*
+                  hours_per_year)
+puts
+puts "Chris Pines was #{cp_age_in_years} years old as of publish date."

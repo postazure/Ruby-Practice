@@ -2,7 +2,6 @@ def please_leave(speach)
   speach == 'BYE'
 end
 
-
 leaving = true
 while (leaving)
   puts "Be polite and say something to Grandma."

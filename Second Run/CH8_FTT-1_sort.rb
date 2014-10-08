@@ -5,7 +5,7 @@ def getWords
   words_to_sort = []
   while (!word.empty?)
     print "Enter Word >>"
-    word = gets.chomp
+    word = gets.chomp.capitalize
     puts
 
     words_to_sort.push word
@@ -33,13 +33,13 @@ def sort_array(sortMe)
         if ordered_array.length == i+1
           ordered_array.push(sortMe[0])
           break
+
         end
 
       end
     end
 
     sortMe.delete_at(0)
-    puts sortMe.length
 
   end
   return ordered_array

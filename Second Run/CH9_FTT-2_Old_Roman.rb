@@ -14,7 +14,7 @@ def numberBreakdown userNum
 
   $roman_symbol.each_with_index do |(key, value), i|
     romanNum_qty[i] = userNum/value
-    userNum = userNum - (romanNum_qty[i]*value)
+    userNum -= (romanNum_qty[i]*value)
   end
 
   return romanNum_qty

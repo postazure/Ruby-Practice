@@ -1,10 +1,17 @@
+
 require 'yaml'
 
 class UserProfile
 
   def initialize
     @pref_filename = 'userPref.txt'
-    @pref_userSettings = {'bold' => 'on, off', 'open' => 'min, max', 'resolution' => 'high, low'}
+    @pref_default_options = {'bold' => 'on, off', 'open' => 'min, max', 'resolution' => 'high, low'}
+
+    @pref_userSettings = {}
+    @pref_default_options.each do |key, value|
+      @pref_userSettings[key] = value
+    end
+    
     @userName = ''
 
     userLogin
@@ -19,13 +26,13 @@ class UserProfile
     @pref_userSettings.each do |key, value|
       puts "#{key}: #{value} <- type in your selection"
       userSelection = gets.chomp.upcase
-      @pref_userSettings[key] = "#{userSelection} ##{value}"
+      @pref_userSettings[key] = "#{userSelection}"
     end
 
 
     filename = "#{@userName}Pref.txt" # we need to check if user already exists
     @pref_filename = filename
-    yaml_save(@pref_userSettings, filename)
+    yaml_save filename
     loadUserPref
 
   end
@@ -52,25 +59,21 @@ class UserProfile
   def loadUserPref
     prefArray = yaml_load @pref_filename
     user_pref = {}
-    print "Loading Preferences."
     prefArray.each do |key, value|
-
       dividerOption = value.index('#')
-
       pref_setting = value[0 .. dividerOption -1].strip
       user_pref[key] = pref_setting
-      print "."
     end
     puts
     @pref_userSettings = user_pref
-    puts "User: #{@userName.capitalize}, preferences have been loaded."
-    puts
-    return @pref_userSettings
   end
 
-  def yaml_save object, filename
+  def yaml_save filename
+    @pref_userSettings.each_key do |key|
+      @pref_userSettings[key] = "#{@pref_userSettings[key]} ##{@pref_default_options[key]}"
+    end
     File.open filename, 'w' do |f|
-      f.write(object.to_yaml)
+      f.write(@pref_userSettings.to_yaml)
     end
   end
 
@@ -100,23 +103,26 @@ class UserProfile
   end
   #---Modify
   def modUserPref_bold
-    puts "MODIFY"
-    modUserPref('bold')
+    self.modUserPref('bold')
   end
   def modUserPref_open
-    modUserPref('open')
+    self.modUserPref('open')
   end
   def modUserPref_resolution
-    modUserPref('resolution')
+    self.modUserPref('resolution')
   end
   def modUserPref key
-    puts "#{key}: #{@pref_userSettings[key]} <- type in your selection"
+
+    loadUserPref
+    puts "#{key}: #{@pref_userSettings[key]} <- Current Setting  |#{@pref_default_options[key]}"
     userSelection = gets.chomp.upcase
-    @pref_userSettings[key] = "#{userSelection} ##{value}"
+    @pref_userSettings[key] = "#{userSelection}"
+
+
+    yaml_save @pref_filename
+    yaml_load @pref_filename
   end
-
-
-
 end
 
-# user = User_Profile.new
+# user = UserProfile.new
+# user.modUserPref_bold

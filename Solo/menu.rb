@@ -9,11 +9,11 @@ class Menu
     puts "\t-----------------------------------------"
     last_item_number = 0
     menuItems.each_with_index do |item, i|
-      puts "#{i+1}. #{item}"
+      puts "\t#{i+1}. #{item.capitalize}"
       last_item_number = i
     end
     if menuItems != @menu_main_list
-      puts "#{last_item_number+2}. Main Menu"
+      puts "\t#{last_item_number+2}. Main Menu"
     end
     puts "\t-----------------------------------------"
     puts "Please enter number to make your selection."

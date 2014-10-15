@@ -1,4 +1,0 @@
----
-bold: 'ON #on, off'
-open: 'MIN #min, max'
-resolution: 'LOW #high, low'

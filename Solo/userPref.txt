@@ -1,3 +1,0 @@
-bold: on #on, off
-open: minimized #min, max
-resolution: high #high, low

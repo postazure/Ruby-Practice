@@ -27,6 +27,19 @@ def readable_number num
 end
 
 now = Time.new
-birth = Time.local(1988,2,3,17,30)
+puts "Year"
+year =gets.chomp.to_i
+puts "month"
+month = gets.chomp.to_i
+puts 'day'
+day = gets.chomp.to_i
+puts 'hour'
+hour = gets.chomp.to_i
+puts 'minute'
+minute = gets.chomp.to_i
+
+
+
+birth = Time.local(year,month,day, hour, minute)
 
 puts readable_number(now - birth)

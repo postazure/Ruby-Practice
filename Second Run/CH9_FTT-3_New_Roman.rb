@@ -49,7 +49,8 @@ puts """
     into a Roman Numeral.
 """
 eng_num = getNumber
-roman_num = romanize (numberBreakdown (eng_num))
+
+roman_num = romanize(numberBreakdown(eng_num))
 puts
 puts "    #{eng_num} converted to Roman Numerals is: #{roman_num}"
 puts

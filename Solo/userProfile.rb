@@ -11,13 +11,13 @@ class UserProfile
     @pref_default_options.each do |key, value|
       @pref_userSettings[key] = value
     end
-    
+
     @userName = ''
 
     userLogin
   end
 
-  def newUser
+  def newUser #Create Dir for each user and save pref to that folder
     print "Create a Username: "
     @userName = gets.chomp
     puts

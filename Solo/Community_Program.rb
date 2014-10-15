@@ -1,5 +1,6 @@
-require_relative 'userProfile'
-require_relative 'menu'
+require_relative 'UserProfile'
+require_relative 'Menu'
+#require_relative 'Notes'
 
 
 $user = UserProfile.new

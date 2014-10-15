@@ -1,10 +1,11 @@
 
 require 'yaml'
+require 'fileutils' #FileUtils.mkdir_p 'dir_name'
 
 class UserProfile
 
   def initialize
-    @pref_filename = 'userPref.txt'
+    @pref_filename = '/username/userPref.txt'
     @pref_default_options = {'bold' => 'on, off', 'open' => 'min, max', 'resolution' => 'high, low'}
 
     @pref_userSettings = {}
@@ -18,24 +19,49 @@ class UserProfile
   end
 
   def newUser #Create Dir for each user and save pref to that folder
-    print "Create a Username: "
-    @userName = gets.chomp
+    while true
+      print "Create a Username (or, type 'exit'): "
+      @userName = gets.chomp
+
+      if @userName.downcase == 'exit'
+        exit
+      elsif newUser_valid @userName
+        break
+      end
+    end
+    
     puts
     puts "You need to setup your preferences to continue."
-
     @pref_userSettings.each do |key, value|
       puts "#{key}: #{value} <- type in your selection"
       userSelection = gets.chomp.upcase
       @pref_userSettings[key] = "#{userSelection}"
     end
 
-
-    filename = "#{@userName}Pref.txt" # we need to check if user already exists
+    newUser_mkdir
+    filename = "./users/#{@userName}/#{@userName}Pref.txt" # we need to check if user already exists
     @pref_filename = filename
     yaml_save filename
     loadUserPref
 
   end
+
+  def newUser_mkdir
+      FileUtils.mkdir_p "./users/#{@userName}"
+  end
+
+  def newUser_valid username
+    if File.directory?("./users/#{username}")
+      puts
+      puts "\t%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+      puts "\t%                 ALERT                   %"
+      puts "\t% Sorry that user ID has been taken.      %"
+      puts "\t% Login as that user or creat a new user. %"
+      puts "\t%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+      puts
+    end
+  end
+
 
   def userLogin
     puts "Enter username or type 'New User' to creat a new user."
@@ -45,7 +71,7 @@ class UserProfile
     if @userName.downcase == 'new user'
       newUser
     else
-      @pref_filename = "#{@userName}Pref.txt"
+      @pref_filename = "./users/#{@userName}/#{@userName}Pref.txt"
       if !File.exist?(@pref_filename)
         puts "Username does not exist!"
         userLogin
@@ -123,6 +149,3 @@ class UserProfile
     yaml_load @pref_filename
   end
 end
-
-# user = UserProfile.new
-# user.modUserPref_bold
